@@ -1,7 +1,5 @@
 #include "CeramicHeater.h"
 
-
-
 CeramicHeater::CeramicHeater(int enable, int error, int temp) {
   // assign Pin values
   enablePin = enable;
@@ -34,6 +32,7 @@ uint16_t CeramicHeater::interpolate(uint16_t x_low16, uint16_t x_hi16, int32_t y
   int32_t interpolated = ((x_hi - x) * y_low + (x - x_low) * y_hi) / (x_hi - x_low);
   return (int16_t) ( interpolated );
 }
+
 
 uint16_t CeramicHeater::getLUTValue(int index){
 #ifdef ESP32

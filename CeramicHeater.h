@@ -2,7 +2,7 @@
 #define CeramicHeater_h
 
 #include <Arduino.h>
-  
+
 #ifdef ESP32
   // logic level
   #define VOLTAGE     3.3
@@ -28,7 +28,6 @@
 #define UNITS      1
 // temp in C of 0th entry
 #define OFFSET     0
-
 
 class CeramicHeater {
   private:

@@ -2,6 +2,7 @@
 
 #define BAUD_RATE   115200
 
+<<<<<<< HEAD
 #define ESP32 
 
 #ifdef ESP32
@@ -17,6 +18,12 @@
 #endif
 
 
+=======
+// pin definitions
+#define ENABLE_PIN  0
+#define ERROR_PIN   1
+#define TEMP_PIN    A0
+>>>>>>> 4a0ff43ee5db6a016e4531603b5f6becd4df90d8
 // debug prints
 #define DEBUG       1
 // target temperature (max set point is 84)
