@@ -22,16 +22,45 @@
 #define TARGET_TEMP 75
 // hysterisis for temperature control
 #define DELTA_TEMP  4
+// temp considered "off"
+#define OFF_TEMP    30
 
 
 CeramicHeater heater(ENABLE_PIN, ERROR_PIN, TEMP_PIN);
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  heater.setup(TARGET_TEMP, DELTA_TEMP, DEBUG);
+  heater.setup(TARGET_TEMP, DELTA_TEMP, OFF_TEMP, DEBUG);
 }
 
+
+int deathCount[] = {1, 1, 1, 1};
+
 void loop() {
-  heater.run();
-  delay(1000);
+
+  for(int i = 0; i < 4; i++){
+    // reset local counter
+    int cycleCount = 0;
+
+    while(cycleCount < deathCount[i]){
+      // cycle the heater
+      heater.cycle();
+      // increment the local counter
+      cycleCount++;
+      Serial.print("local cycle count: ");
+      Serial.println(cycleCount);
+      // keep track of the total cycles
+      heater.incrementCycleCount();
+      Serial.print("total heater cycles: ");
+      Serial.println(heater.getCycleCount());
+    }
+    
+    Serial.println("week is over!");
+  }
+
+  while(true){
+    Serial.println("doing nothing");
+    delay(100000);
+  }
+
 }

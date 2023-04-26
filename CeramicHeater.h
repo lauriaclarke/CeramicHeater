@@ -29,6 +29,9 @@
 // temp in C of 0th entry
 #define OFFSET     0
 
+
+
+
 class CeramicHeater {
   private:
     // pin setup
@@ -39,6 +42,9 @@ class CeramicHeater {
     int currentTemp;
     int targetTemp;
     int deltaTemp;
+    int offTemp;
+    // number of cycles executed
+    int cycleCount = 0;
     // state variable
     //  0 = off
     //  1 = on
@@ -46,12 +52,14 @@ class CeramicHeater {
     int heaterState;
     // debug variable
     bool debug = false;
+    // state machine names
+    enum CycleState {TURNON, HEATING, COOLING, DONE};
 
   public:
     // constructor
     CeramicHeater(int enable, int error, int temp);
     // setup the pins and set a temp
-    void setup(int target, int delta, bool debug);
+    void setup(int target, int delta, int off, bool debug);
     // get the temperature
     int getTemp();
     // function to switch between ESP32 and UNO
@@ -74,10 +82,22 @@ class CeramicHeater {
     void setDeltaTemp(int delta);
     // set the delta temp
     int getDeltaTemp();
-    // get the delta temp
+    // set the "off" temp
+    void setOffTemp(int off);
+    // get the "off" temp
+    int getOffTemp();
+    
+    void setCycleCount(int count);
+    void incrementCycleCount();
+
+    int getCycleCount();
+
+    // get the current state
     int getState();
     // run the heater at the set temp
     void run();
+    // cycle the hearter on / off for a single death
+    bool cycle();
 };
 
 #endif
